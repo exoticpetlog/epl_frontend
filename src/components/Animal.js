@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
+import Moment from "react-moment";
 
 const ANIMAL_QUERY = gql`
   query AnimalQuery($id: Int!) {
@@ -75,15 +76,23 @@ export default class Animal extends Component {
                 <h6>{data.animal.description}</h6>
                 <table>
                   <tbody>
-                    {data.animal.history.map(each => (
-                      <tr>
-                        <th>{getAction(each)}</th>
-                        <th>{each.success ? "Success" : "Failure"}</th>
-                        <th>
-                          {each.quantity}x {getItem(each)}
-                        </th>
-                      </tr>
-                    ))}
+                    {data.animal.history.map(each => {
+                      const date = new Date(Number(each.created_at));
+                      return (
+                        <tr>
+                          <th>
+                            <Moment format="YYYY-MM-DD ">{date}</Moment>
+                            {/* Time:{"  "}
+                            <Moment format="HH:mm">{date}</Moment> */}
+                          </th>
+                          <th>{getAction(each)}</th>
+                          <th>{each.success ? "Success" : "Failure"}</th>
+                          <th>
+                            {each.quantity}x {getItem(each)}
+                          </th>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </>
