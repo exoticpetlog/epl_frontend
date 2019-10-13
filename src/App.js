@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+// import logo from "./logo.svg";
+// import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+import Animals from "./components/Animals";
+
+import { API_URI, PERMA_TOKEN } from "./env";
+
+const client = new ApolloClient({
+  uri: API_URI,
+  headers: {
+    authorization: PERMA_TOKEN,
+  },
+});
+
+console.log("token " + PERMA_TOKEN);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <div className="container">
+          <Route exact path="/" component={Animals} />
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 
