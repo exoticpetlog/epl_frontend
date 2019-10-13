@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -19,4 +19,17 @@
 
 .App-link {
   color: #09d3ac;
+} */
+
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #ccc;
+}
+table td,
+table th {
+  text-align: center;
+  padding: 0 5px;
 }

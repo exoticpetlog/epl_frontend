@@ -1,9 +1,12 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 const AnimalsItem = props => {
-  console.log(props.speciesList);
+  function goToAnimal() {
+    props.history.push(`/animal_${props.animal.id}`);
+  }
   return (
-    <tr>
+    <tr onClick={goToAnimal}>
       <th>{props.animal.name}</th>
       <th>{props.animal.description}</th>
       <th>{props.species}</th>
@@ -11,4 +14,4 @@ const AnimalsItem = props => {
   );
 };
 
-export default AnimalsItem;
+export default withRouter(AnimalsItem);

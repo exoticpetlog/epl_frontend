@@ -19,6 +19,7 @@ const ANIMALS_QUERY = gql`
   }
 `;
 
+// poor man's data store
 const speciesList = {};
 function generateList(data) {
   for (let i in data.species) {
@@ -38,10 +39,10 @@ export default class Animals extends Component {
           {({ loading, error, data }) => {
             if (loading) return <h4>Loading...</h4>;
             if (error) console.log(error);
+            generateList(data);
             return (
               <table>
                 <tbody>
-                  {generateList(data)}
                   {data.animals.map(animal => (
                     <AnimalsItem
                       key={animal.id}
