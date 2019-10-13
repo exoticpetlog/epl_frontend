@@ -9,9 +9,25 @@ const ANIMALS_QUERY = gql`
     animals(org_id: 1) {
       id
       name
+      species_id
+      description
+    }
+    species(org_id: 1) {
+      id
+      name
     }
   }
 `;
+
+const speciesList = {};
+function generateList(data) {
+  for (let i in data.species) {
+    speciesList[data.species[i].id] = data.species[i].name;
+  }
+}
+function getSpecies(animal) {
+  return speciesList[animal.species_id];
+}
 
 export default class Animals extends Component {
   render() {
@@ -22,13 +38,19 @@ export default class Animals extends Component {
           {({ loading, error, data }) => {
             if (loading) return <h4>Loading...</h4>;
             if (error) console.log(error);
-            console.log(data);
             return (
-              <>
-                {data.animals.map(animal => (
-                  <AnimalsItem key={animal.id} animal={animal} />
-                ))}
-              </>
+              <table>
+                <tbody>
+                  {generateList(data)}
+                  {data.animals.map(animal => (
+                    <AnimalsItem
+                      key={animal.id}
+                      animal={animal}
+                      species={getSpecies(animal)}
+                    />
+                  ))}
+                </tbody>
+              </table>
             );
           }}
         </Query>

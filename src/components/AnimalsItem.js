@@ -1,7 +1,14 @@
 import React from "react";
 
 const AnimalsItem = props => {
-  return <div>{props.animal.name}</div>;
+  console.log(props.speciesList);
+  return (
+    <tr>
+      <th>{props.animal.name}</th>
+      <th>{props.animal.description}</th>
+      <th>{props.species}</th>
+    </tr>
+  );
 };
 
 export default AnimalsItem;
