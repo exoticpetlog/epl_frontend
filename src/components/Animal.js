@@ -35,6 +35,7 @@ const ANIMAL_QUERY = gql`
   }
 `;
 
+// create key-value mappings for actions and items
 const actionsList = {};
 function generateList(data) {
   const { actions } = data.animal;
@@ -76,20 +77,26 @@ export default class Animal extends Component {
                 <h6>{data.animal.description}</h6>
                 <table>
                   <tbody>
+                    <tr>
+                      <th>Date</th>
+                      <th>Action</th>
+                      <th>Result</th>
+                      <th>Item</th>
+                      <th>Status</th>
+                    </tr>
                     {data.animal.history.map(each => {
                       const date = new Date(Number(each.created_at));
                       return (
                         <tr>
                           <th>
                             <Moment format="YYYY-MM-DD ">{date}</Moment>
-                            {/* Time:{"  "}
-                            <Moment format="HH:mm">{date}</Moment> */}
                           </th>
                           <th>{getAction(each)}</th>
                           <th>{each.success ? "Success" : "Failure"}</th>
                           <th>
                             {each.quantity}x {getItem(each)}
                           </th>
+                          <th>{each.is_complete ? "Completed" : "Pending"}</th>
                         </tr>
                       );
                     })}
